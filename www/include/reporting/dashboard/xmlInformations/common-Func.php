@@ -90,16 +90,17 @@ function fillBuffer($statesTab, $row, $color)
     $Duration = _("Duration");
     $Alert = _("Alert");
     $detailPopup = '{table class=bulleDashtab}';
-    $detailPopup .= '{tr}{td class=bulleDashleft colspan=3}'.$Day.': '.
-        date("d/m/Y", $date_start) .' --  '.$Duration.': '.
+    $detailPopup .= '{tr}{td class=bulleDashleft colspan=3}' . $Day .
+        ': {span class ="isTimestamp isDate"}';
+    $detailPopup .= $date_start . '{/span} --  ' . $Duration . ': '.
         CentreonDuration::toString($totalTime).'{/td}{td class=bulleDashleft }'.$Alert.'{/td}{/tr}';
     foreach ($statesTab as $key => $value) {
-        $detailPopup .= '	{tr}' .
-                        '		{td class=bulleDashleft style="background:'.$color[$value].';"  }'._($value).':{/td}' .
-                        '		{td class=bulleDash}'. CentreonDuration::toString($statTab[$value."_T"]) .'{/td}' .
-                        '		{td class=bulleDash}'.$statTab[$value."_MP"].'%{/td}'.
-                        '		{td class=bulleDash}'.$statTab[$value."_A"].'{/td}';
-        $detailPopup .= '	{/tr}';
+        $detailPopup .= '{tr}' .
+                        '{td class=bulleDashleft style="background:' . $color[$value] . ';"  }' . _($value) . ':{/td}' .
+                        '{td class=bulleDash}' . CentreonDuration::toString($statTab[$value."_T"]) . '{/td}' .
+                        '{td class=bulleDash}' . $statTab[$value."_MP"] . '%{/td}'.
+                        '{td class=bulleDash}' . $statTab[$value."_A"] . '{/td}';
+        $detailPopup .= '{/tr}';
     }
     $detailPopup .= '{/table}';
 
