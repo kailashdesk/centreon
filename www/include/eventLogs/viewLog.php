@@ -249,6 +249,26 @@ $form->addElement(
     )
 );
 
+/* adding hidden fields to get the result of datepicker in an unlocalized format */
+$form->addElement(
+    'hidden',
+    'alternativeDateStartDate',
+    '',
+    array(
+        'size' => 10,
+        'class' => 'alternativeDate'
+    )
+);
+$form->addElement(
+    'hidden',
+    'alternativeDateEndDate',
+    '',
+    array(
+        'size' => 10,
+        'class' => 'alternativeDate'
+    )
+);
+
 if ($engine == "false") {
     $form->addElement(
         'button',
@@ -374,6 +394,9 @@ if ($engine == 'false') {
 <script language='javascript' src='./include/common/javascript/tool.js'></script>
 <script>
 
+    /*
+     * Selecting choosen Host, Service, HG and/or SG
+     */
     function apply_period() {
         var openid = getArgsForHost();
         logs(openid[0], '', '');
@@ -449,8 +472,8 @@ if ($engine == 'false') {
     }
 
     if (document.FormPeriod && document.FormPeriod.period.value == "") {
-        document.FormPeriod.StartDate.value = StartDate;
-        document.FormPeriod.EndDate.value = EndDate;
+        StartDate = jQuery("input[name=alternativeDateStartDate]").val();
+        EndDate = jQuery("input[name=alternativeDateEndDate]").val();
         document.FormPeriod.StartTime.value = StartTime;
         document.FormPeriod.EndTime.value = EndTime;
     }
@@ -482,7 +505,6 @@ if ($engine == 'false') {
         if (window.history.pushState) {
             window.history.pushState("", "", "main.php?p=20302&engine=true" + urlargs);
         }
-
         controlTimePeriod();
         var proc = new Transformation();
         var _addrXSL = "./include/eventLogs/xsl/logEngine.xsl";
@@ -517,22 +539,22 @@ if ($engine == 'false') {
     }
 
     function controlTimePeriod() {
+
         if (document.FormPeriod) {
             if (document.FormPeriod.period.value != "") {
                 period = document.FormPeriod.period.value;
             } else {
                 period = '';
-                StartDate = document.FormPeriod.StartDate.value;
-                EndDate = document.FormPeriod.EndDate.value;
+                StartDate = jQuery("input[name=alternativeDateStartDate]").val();
+                EndDate = jQuery("input[name=alternativeDateEndDate]").val();
                 StartTime = document.FormPeriod.StartTime.value;
                 EndTime = document.FormPeriod.EndTime.value;
             }
         }
-        if (document.FormPeriod && document.FormPeriod.StartDate.value != "")
-            StartDate = document.FormPeriod.StartDate.value;
-        if (document.FormPeriod && document.FormPeriod.EndDate.value != "")
-            EndDate = document.FormPeriod.EndDate.value;
-
+        if (document.FormPeriod && jQuery("input[name=alternativeDateStartDate]").val() != "")
+            StartDate = jQuery("input[name=alternativeDateStartDate]").val();
+        if (document.FormPeriod && jQuery("input[name=alternativeDateStartDate]").val() != "")
+            EndDate = jQuery("input[name=alternativeDateEndDate]").val();
         if (document.FormPeriod && document.FormPeriod.StartTime.value != "")
             StartTime = document.FormPeriod.StartTime.value;
         if (document.FormPeriod && document.FormPeriod.EndTime.value != "")
