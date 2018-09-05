@@ -150,23 +150,6 @@
     //formatting the tags containing a class isTimestamp
     formatDateMoment();
 
-/*
-    jQuery("#StartDate").datepicker({
-        maxDate: '-1',
-        onSelect : function(data){  
-            jQuery( "select[name='period'] > option[value='']" ).prop('selected', true);
-            jQuery( "input[value='custom'][name='period_choice'][type='radio']").prop('checked', true);
-        }
-    });
-
-    jQuery("#EndDate").datepicker({
-        maxDate: '-1',
-        onSelect : function(data){  
-            jQuery( "select[name='period'] > option[value='']" ).prop('selected', true);
-            jQuery( "input[value='custom'][name='period_choice'][type='radio']").prop('checked', true);
-        }
-    });
-*/
     jQuery( "select[name='period']" ).click(function() {
         jQuery( "input[value='preset'][name='period_choice'][type='radio']").prop('checked', true);
     });
