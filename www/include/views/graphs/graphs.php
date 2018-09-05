@@ -103,7 +103,7 @@ $centreonPerformanceServiceGraphObj = new CentreonPerformanceService($pearDBO, $
 $svc_id = getGetPostValue("svc_id");
 
 $DBRESULT = $pearDB->query("SELECT * FROM options WHERE `key` = 'maxGraphPerformances' LIMIT 1");
-$data = $DBRESULT->fetchRow();
+$data = $DBRESULT->fetch();
 $graphsPerPage = $data['value'];
 if (empty($graphsPerPage)) {
     $graphsPerPage = '18';
@@ -160,8 +160,12 @@ if (isset($_REQUEST['end']) && is_numeric($_REQUEST['end'])) {
 /*
  * Form begin
  */
-$form = new HTML_QuickFormCustom('FormPeriod', 'get', "?p=".$p);
-$form->addElement('header', 'title', _("Choose the source to graph"));
+$form = new HTML_QuickFormCustom('FormPeriod', 'get', "?p=" . $p);
+$form->addElement(
+    'header',
+    'title',
+    _("Choose the source to graph")
+);
 
 $periods = array(
     "" => "",
@@ -236,7 +240,36 @@ $form->addElement(
         "onchange" => "changePeriod()"
     )
 );
-$form->addElement('button', 'graph', _("Apply Period"), array("onclick"=>"apply_period()", "class"=>"btc bt_success"));
+
+/* adding hidden fields to get the result of datepicker in an unlocalized format */
+$form->addElement(
+    'hidden',
+    'alternativeDateStartDate',
+    '',
+    array(
+        'size' => 10,
+        'class' => 'alternativeDate'
+    )
+);
+$form->addElement(
+    'hidden',
+    'alternativeDateEndDate',
+    '',
+    array(
+        'size' => 10,
+        'class' => 'alternativeDate'
+    )
+);
+
+$form->addElement(
+    'button',
+    'graph',
+    _("Apply Period"),
+    array(
+        "onclick"=>"apply_period()",
+        "class"=>"btc bt_success"
+    )
+);
 
 if ($period_start != 'undefined' && $period_end != 'undefined') {
     $startDay = date('Y-m-d', $period_start);
@@ -252,9 +285,11 @@ if ($period_start != 'undefined' && $period_end != 'undefined') {
         )
     );
 } else {
-    $form->setDefaults(array(
-        'period' => '3h'
-    ));
+    $form->setDefaults(
+        array(
+            'period' => '3h'
+        )
+    );
 }
 
 $renderer = new HTML_QuickForm_Renderer_ArraySmarty($tpl);

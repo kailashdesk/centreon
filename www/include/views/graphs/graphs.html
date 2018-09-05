@@ -17,8 +17,8 @@
                     <select id="select-chart" multiple size="1"></select>
                 </td>
                 <td class="tour-choose-period tour-global-period" id="tour-choose-period">{$form.period.html}</td>
-                <td class="tour-define-period tour-global-period" id="tour-define-period">{$form.StartDate.html} {$form.StartTime.html}</td>
-                <td class="tour-define-period tour-global-period">{$form.EndDate.html} {$form.EndTime.html}</td>
+                <td class="tour-define-period tour-global-period" id="tour-define-period">{$form.StartDate.html} {$form.StartTime.html} {$form.alternativeDateStartDate.html}</td>
+                <td class="tour-define-period tour-global-period">{$form.EndDate.html} {$form.EndTime.html} {$form.alternativeDateEndDate.html}</td>
             </tr>
             <tr>
                 <td class="divider" colspan="4"><hr></td>
@@ -227,6 +227,9 @@ var tooManyChartMsg = "{t}You cannot add more charts. The maximum charts is {/t}
             <div class="chart chart-status" id="graph-status-{{graphId}}" data-graph-id="{{graphId}}" data-graph-type="status">
             </div>
         </div>
+    </div>
+    <div>
+        {$form.hidden}
     </div>
 </script>
 <script>
